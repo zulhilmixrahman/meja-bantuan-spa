@@ -1,32 +1,20 @@
-<p align="center">
-<a href="https://laravel.com" target="_blank">
-<img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" height="100">
-</a>
-</p>
-
-<p align="center">
-<a href="https://github.com/tabler/tabler" target="_blank">
-<img src="https://raw.githubusercontent.com/tabler/tabler/dev/src/static/logo.svg" height="60">
-</a>
-</p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/tree/v11.15.0" target="__blank">
-<img src="https://img.shields.io/badge/Laravel-11.0.15-red?logo=laravel&logoColor=orange">
-</a>
-<a href="https://www.npmjs.com/package/bootstrap/v/5.3.3" target="__blank">
-<img src="https://img.shields.io/badge/Bootstrap-5.3-purple?logo=bootstrap&logoColor=purple">
-</a>
-<a href="https://www.npmjs.com/package/@tabler/core/v/1.0.0-beta20" target="__blank">
-<img src="https://img.shields.io/badge/Tabler-1.0.0--beta20-blue">
-</a>
-</p>
+<table align="center">
+    <tr>
+        <td valign="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" height="100"></a></td>
+        <td valign="center"><a href="https://github.com/tabler/tabler" target="_blank"><img src="https://raw.githubusercontent.com/tabler/tabler/dev/src/static/logo.svg" height="50"></a></td>
+    </tr>
+    <tr>
+        <td  align="center" colspan="2">
+            <a href="https://github.com/laravel/framework/tree/v11.15.0" target="__blank"><img src="https://img.shields.io/badge/Laravel-11.0.15-red?logo=laravel&logoColor=orange"></a>
+            <a href="https://www.npmjs.com/package/bootstrap/v/5.3.3" target="__blank"><img src="https://img.shields.io/badge/Bootstrap-5.3-purple?logo=bootstrap&logoColor=purple"></a>
+            <a href="https://www.npmjs.com/package/@tabler/core/v/1.0.0-beta20" target="__blank"><img src="https://img.shields.io/badge/Tabler-1.0.0--beta20-blue"></a>
+        </td>
+    </tr>
+</table>
 
 # Laravel with Tabler Admin Dashboard Template
 
 ## Project Installation
-
-1. 
 
 - git clone
 - cp .env.example .env
