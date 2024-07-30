@@ -36,7 +36,17 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_id' => 'required|integer|exists:categories,id',
+            'name' => 'required',
+        ]);
+
+        $sub_category = new SubCategory();
+        $sub_category->category_id = $request->input('category_id');
+        $sub_category->name = $request->input('name');
+        $sub_category->save();
+
+        return to_route('admin.sub_categories.index');
     }
 
     /**
