@@ -60,24 +60,38 @@ class SubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(SubCategory $sub_category)
     {
-        //
+        $categories = Category::all();
+        return view('admin.subcategory.edit', [
+            'categories' => $categories,
+            'sub_category' => $sub_category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, SubCategory $sub_category)
     {
-        //
+        $request->validate([
+            'category_id' => 'required|integer|exists:categories,id',
+            'name' => 'required',
+        ]);
+
+        $sub_category->category_id = $request->input('category_id');
+        $sub_category->name = $request->input('name');
+        $sub_category->save();
+
+        return to_route('admin.sub_categories.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(SubCategory $sub_category)
     {
-        //
+        $sub_category->delete();
+        return to_route('admin.sub_categories.index');
     }
 }
