@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Public\ComplaintController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('aduan', [ComplaintController::class, 'showForm']);
+Route::post('aduan', [ComplaintController::class, 'complaint'])->name('public.complaint');
 
 Auth::routes();
 

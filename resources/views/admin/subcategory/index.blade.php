@@ -34,7 +34,7 @@
                     @foreach ($senarai_sub_kategori as $item)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $item->category_id }}</td>
+                            <td>{{ $item->category->name }}</td>
                             <td>{{ $item->name }}</td>
                             <td class="text-center align-middle">
                                 <a href="{{ route('admin.sub_categories.edit', ['sub_category' => $item]) }}" class="btn btn-yellow btn-icon">
