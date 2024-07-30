@@ -40,4 +40,3 @@
         </x-form>
     </div>
 </div>
-</div>

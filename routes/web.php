@@ -16,6 +16,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', App\Http\Controllers\Admin\UserController::class)->except(['show']);
         Route::resource('roles', App\Http\Controllers\Admin\RoleController::class)->except(['show', 'destroy']);
         Route::resource('permissions', App\Http\Controllers\Admin\PermissionController::class)->only(['index', 'create', 'store']);
+
+        Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+        Route::resource('sub_categories', App\Http\Controllers\Admin\SubCategoryController::class);
     });
 });
 
