@@ -17,10 +17,10 @@
 
                 <div class="mb-3">
                     <label class="form-label">Kategori</label>
-                    <select name="category_id" class="form-select">
+                    <select name="category_id" class="form-select @error('category_id') is-invalid @enderror">
                         <option value="">-- Pilihan --</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">
+                            <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
                                 {{ $category->name }}
                             </option>
                         @endforeach
