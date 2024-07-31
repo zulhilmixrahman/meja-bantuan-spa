@@ -27,6 +27,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
         Route::resource('sub_categories', App\Http\Controllers\Admin\SubCategoryController::class);
     });
+
+    Route::prefix('helpdesk')->name('helpdesk.')->group(function (){
+        Route::get('senarai-aduan', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'index'])->name('index');
+    });
 });
 
 /**
