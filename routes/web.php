@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::post('agihan-aduan/{complaint}', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'agih'])->name('agih');
         Route::get('tindakan-aduan/{complaint}', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'tindakanForm']);
         Route::post('tindakan-aduan/{complaint}', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'tindakan'])->name('tindakan');
+        Route::get('logs/{complaint}', [\App\Http\Controllers\Helpdesk\ComplaintController::class, 'logs'])->name('logs');
     });
 });
 

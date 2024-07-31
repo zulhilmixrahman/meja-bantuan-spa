@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="card">
-        <x-form :action="route('helpdesk.agih', ['complaint' => $complaint])" method="POST">
+        <x-form :action="route('helpdesk.tindakan', ['complaint' => $complaint])" method="POST">
             <div class="card-body">
 
                 <div class="mb-3 row">

@@ -20,6 +20,7 @@
                         <td>Tiket</td>
                         <td>Kategori</td>
                         <td>Sub Kategori</td>
+                        <td>Pegawai Kes</td>
                         <td>Tindakan</td>
                     </tr>
                 </thead>
@@ -30,12 +31,16 @@
                             <td>{{ $complaint->no_tiket }}</td>
                             <td>{{ $complaint->sub_category->category->name }}</td>
                             <td>{{ $complaint->sub_category->name }}</td>
+                            <td>{{ $complaint->officer->name ?? 'Tiada' }}</td>
                             <td class="text-center align-middle">
                                 <a href="{{ route('helpdesk.agih', ['complaint' => $complaint->id]) }}" class="btn btn-purple">
                                     Agih Aduan
                                 </a>
                                 <a href="{{ route('helpdesk.tindakan', ['complaint' => $complaint->id]) }}" class="btn btn-lime">
                                     Tindakan
+                                </a>
+                                <a href="{{ route('helpdesk.logs', ['complaint' => $complaint->id]) }}" class="btn btn-blue">
+                                    Log Tindakan
                                 </a>
                             </td>
                         </tr>
