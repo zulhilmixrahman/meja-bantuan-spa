@@ -40,5 +40,16 @@ class ComplaintController extends Controller
         $complaint->title = $request->input('title');
         $complaint->detail = $request->input('detail');
         $complaint->save();
+
+        return to_route('public.ticket', ['ticket' => $complaint->no_tiket]);
+    }
+
+    public function showTicket($ticket)
+    {
+        $complaint = Complaint::where('no_tiket', $ticket)->first();
+        // dd($complaint);
+        return view('public.ticket', [
+            'complaint' => $complaint
+        ]);
     }
 }

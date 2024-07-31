@@ -9,6 +9,8 @@ Route::get('/', function () {
 });
 Route::get('aduan', [ComplaintController::class, 'showForm']);
 Route::post('aduan', [ComplaintController::class, 'complaint'])->name('public.complaint');
+Route::get('aduan/{ticket}', [ComplaintController::class, 'showTicket'])->name('public.ticket');
+
 Route::post('sub-category/options', [SubCategoryController::class, 'options'])->name('subcategories.options');
 
 Auth::routes();
