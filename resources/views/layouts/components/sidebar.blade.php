@@ -171,6 +171,11 @@
                         <span class="nav-link-title">@lang('Home')</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('helpdesk.index') }}">
+                        <span class="nav-link-title">@lang('Senarai Aduan')</span>
+                    </a>
+                </li>
                 <li class="nav-item active dropdown">
                     <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="true">

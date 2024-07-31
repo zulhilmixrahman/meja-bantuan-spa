@@ -31,10 +31,10 @@
                             <td>{{ $complaint->sub_category->category->name }}</td>
                             <td>{{ $complaint->sub_category->name }}</td>
                             <td class="text-center align-middle">
-                                <a href="#" class="btn btn-purple">
+                                <a href="{{ route('helpdesk.agih', ['complaint' => $complaint->id]) }}" class="btn btn-purple">
                                     Agih Aduan
                                 </a>
-                                <a href="#" class="btn btn-lime">
+                                <a href="{{ route('helpdesk.tindakan', ['complaint' => $complaint->id]) }}" class="btn btn-lime">
                                     Tindakan
                                 </a>
                             </td>

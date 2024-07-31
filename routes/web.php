@@ -30,6 +30,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('helpdesk')->name('helpdesk.')->group(function (){
         Route::get('senarai-aduan', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'index'])->name('index');
+        Route::get('agihan-aduan/{complaint}', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'agihanForm']);
+        Route::post('agihan-aduan/{complaint}', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'agih'])->name('agih');
+        Route::get('tindakan-aduan/{complaint}', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'tindakanForm']);
+        Route::post('tindakan-aduan/{complaint}', [App\Http\Controllers\Helpdesk\ComplaintController::class, 'tindakan'])->name('tindakan');
     });
 });
 
