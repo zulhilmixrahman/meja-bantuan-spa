@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }}</title>
     <!-- CSS files -->
     <link href="{{ asset('tabler/css/tabler.min.css?1684106062') }}" rel="stylesheet" />
@@ -29,17 +30,23 @@
         <div class="container container-normal py-4">
             <div class="row align-items-center g-4">
                 <div class="col-lg">
-
                     @yield('content')
-
                 </div>
             </div>
         </div>
     </div>
     <!-- Libs JS -->
     <script src="{{ asset('tabler/js/tabler.min.js?1684106062') }}" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="{{ asset('js/auth.js') }}" defer></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    @yield('page-scripts')
 </body>
 
 </html>

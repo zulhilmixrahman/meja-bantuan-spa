@@ -32,7 +32,7 @@ class ComplaintController extends Controller
         $complaint = new Complaint();
 
         $complaint->no_tiket = 'ICT-' . date('Ym') . '-' . time();
-        $complaint->sub_category_id = 1;
+        $complaint->sub_category_id = $request->input('sub_category_id');
 
         $complaint->user_name = $request->input('user_name');
         $complaint->user_email = $request->input('user_email');

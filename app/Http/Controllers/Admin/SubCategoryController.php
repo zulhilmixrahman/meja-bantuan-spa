@@ -94,4 +94,10 @@ class SubCategoryController extends Controller
         $sub_category->delete();
         return to_route('admin.sub_categories.index');
     }
+
+    public function options(Request $request)
+    {
+        $sub = SubCategory::where('category_id', $request->id)->pluck('name', 'id');
+        return response()->json($sub);
+    }
 }

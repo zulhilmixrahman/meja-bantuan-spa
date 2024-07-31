@@ -72,3 +72,37 @@
         </x-form>
     </div>
 @endsection
+
+@section('page-scripts')
+    <script>
+        function getOptions(catID) {
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('subcategories.options') }}',
+                data: {
+                    id: catID
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // console.log(response);
+                    $('select[name=sub_category_id]').empty();
+                    $.each(response, function(key, value) {
+                        var div_data = "<option value=" + key +
+                            ('{{ old('sub_category_id') }}' == key ? ' selected' : '') +
+                            ">" + value + "</option>";
+                        $(div_data).appendTo('select[name=sub_category_id]');
+                    });
+                }
+            });
+        }
+
+        $('select[name="category_id"]').change(function() {
+            // alert( $(this).val() );
+            getOptions($(this).val());
+        });
+
+        @if (old('category_id') !== null)
+            getOptions({{ old('category_id') }});
+        @endif
+    </script>
+@endsection
