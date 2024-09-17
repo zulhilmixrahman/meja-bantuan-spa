@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
 
 class ComplaintController extends Controller
 {
@@ -27,7 +29,14 @@ class ComplaintController extends Controller
             // 'sub_category_id' => 'required|integer|exists:sub_categories,id',
             'title' => 'required',
             'detail' => 'required',
+            'lampiran' => [
+                'nullable',
+                File::types(['jpg', 'png', 'pdf']) // Limit by extensions file
+                    ->max(2 * 1024) // Limit file size in bytes (1mb = 1024byte)
+            ]
         ]);
+
+        // dd($request->all());
 
         $complaint = new Complaint();
 
@@ -39,6 +48,12 @@ class ComplaintController extends Controller
         $complaint->user_tel = $request->input('user_tel');
         $complaint->title = $request->input('title');
         $complaint->detail = $request->input('detail');
+
+        if ($request->hasFile('lampiran')) {
+            $path = $request->file('lampiran')->store('lampiran-aduan');
+            $complaint->lampiran = $path;
+        }
+
         $complaint->save();
 
         return to_route('public.ticket', ['ticket' => $complaint->no_tiket]);
@@ -51,5 +66,28 @@ class ComplaintController extends Controller
         return view('public.ticket', [
             'complaint' => $complaint
         ]);
+    }
+
+    public function download($ticket)
+    {
+        $complaint = Complaint::where('no_tiket', $ticket)->firstOrFail();
+
+        if ($complaint->lampiran !== null) {
+            $extension = \Illuminate\Support\Facades\File::extension($complaint->lampiran);
+            $filename = $ticket . '.' . $extension;
+
+            return Storage::download($complaint->lampiran, $filename);
+        }
+
+        return abort(404, 'Lampiran not found');
+    }
+
+    public function printTicket($ticket)
+    {
+        $complaint = Complaint::where('no_tiket', $ticket)->firstOrFail();
+        $pdf = \PDF::loadView('public.pdf', [
+            'complaint' => $complaint
+        ]);
+        return $pdf->stream($ticket . '.pdf');
     }
 }

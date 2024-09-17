@@ -23,7 +23,8 @@
 
             <div class="mb-3 row">
                 <label for="category_id" class="col-2 col-form-label">Kategori</label>
-                <div class="col">{{ $complaint->sub_category->category->name }} / {{ $complaint->sub_category->name }}</div>
+                <div class="col">{{ $complaint->sub_category->category->name }} / {{ $complaint->sub_category->name }}
+                </div>
             </div>
 
             <!-- Default form layout -->
@@ -36,10 +37,20 @@
                 <label for="detail" class="form-label">Butiran Aduan</label>
                 {{ $complaint->detail }}
             </div>
+
+            <div class="mb-3">
+                <label for="detail" class="form-label">Lampiran</label>
+                <a href="{{ route('public.download', $complaint->no_tiket) }}" class="btn btn-dark">
+                    Muat turun lampiran
+                </a>
+            </div>
         </div>
 
         <div class="card-footer d-flex justify-content-end">
             <a href="{{ route('home') }}" class="btn btn-ghost-secondary me-auto">Kembali</a>
+            <a href="{{ route('public.pdf', $complaint->no_tiket) }}" class="btn btn-ghost-danger" target="_blank">
+                <i class="fa-solid fa-file-pdf"></i>
+            </a>
         </div>
 
     </div>

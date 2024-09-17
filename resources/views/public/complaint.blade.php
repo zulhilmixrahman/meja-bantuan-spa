@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card">
-        <x-form :action="route('public.complaint')" method="POST">
+        <x-form :action="route('public.complaint')" method="POST" :hasFiles="true">
             <div class="card-body">
                 <div class="mb-3 row">
                     <label for="username" class="col-2 col-form-label">Nama Pengadu</label>
@@ -61,6 +61,12 @@
                     <label for="detail" class="form-label">Butiran Aduan</label>
                     <x-inputs.textarea name="detail" />
                     <x-inputs.error name="detail" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Lampiran</label>
+                    <x-inputs.input type="file" name="lampiran" accept=".jpg,.png,.pdf" />
+                    <x-inputs.error name="lampiran" />
                 </div>
             </div>
 
