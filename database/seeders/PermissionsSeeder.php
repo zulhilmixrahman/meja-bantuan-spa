@@ -42,6 +42,11 @@ class PermissionsSeeder extends Seeder
         $permissions['user'] = ['access users', 'add user', 'edit user', 'delete user'];
         $permissions['department'] = ['access departments', 'add department', 'edit department', 'delete department'];
 
+        $permissions['category'] = ['access categories', 'add category', 'edit category', 'delete category'];
+        $permissions['subcategory'] = ['access subcategories', 'add subcategory', 'edit subcategory', 'delete subcategory'];
+        $permissions['complaint'] = ['urus aduan', 'agih aduan', 'kemaskini tindakan'];
+
+
         /** CREATE PERMISSIONS *********************/
         foreach ($permissions as $key => $permission) {
             foreach ($permission as $permission_name) {
@@ -62,10 +67,29 @@ class PermissionsSeeder extends Seeder
             'updated_at' => now()
         ])->givePermissionTo(Permission::all());
 
+        $pentadbir = Role::create([
+            'name' => 'Pentadbir Aduan',
+            'guard_name' => 'web',
+            'created_at' => now(),
+            'updated_at' => now()
+        ])->givePermissionTo(array_merge(
+            $permissions['category'],
+            $permissions['subcategory'],
+            ['urus aduan', 'agih aduan']
+        ));
+
+        $pegawai = Role::create([
+            'name' => 'Pegawai Aduan',
+            'guard_name' => 'web',
+            'created_at' => now(),
+            'updated_at' => now()
+        ])->givePermissionTo(['kemaskini tindakan']);
+
+
         /** CREATE DEFAULT USERS *******************/
         $admin = User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@tabler.my',
+            'name' => 'Pentadbir Sistem',
+            'email' => 'admin@spa.my',
             'email_verified_at' => now(),
             'password' => Hash::make(config('constants.default-password')),
             'remember_token' => Str::random(10),
@@ -73,5 +97,27 @@ class PermissionsSeeder extends Seeder
             'updated_at' => now(),
         ]);
         $admin->assignRole($super_admin);
+
+        $user2 = User::create([
+            'name' => fake('ms_MY')->name(),
+            'email' => 'pentadbir@spa.my',
+            'email_verified_at' => now(),
+            'password' => Hash::make(config('constants.default-password')),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $user2->assignRole($pentadbir);
+
+        $user3 = User::create([
+            'name' => fake('ms_MY')->name(),
+            'email' => 'pegawai@spa.my',
+            'email_verified_at' => now(),
+            'password' => Hash::make(config('constants.default-password')),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $user3->assignRole($pegawai);
     }
 }
