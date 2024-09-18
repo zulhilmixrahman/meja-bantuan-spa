@@ -14,7 +14,7 @@
             <x-form :action="route('password.email')">
                 <div class="mb-3">
                     <label class="form-label">@lang('Email Address')</label>
-                    <input type="email" class="form-control" placeholder="@lang('your@email.com')" autocomplete="off">
+                    <input type="email" name="email" class="form-control" placeholder="@lang('your@email.com')" autocomplete="off">
                 </div>
 
                 <div class="form-footer">

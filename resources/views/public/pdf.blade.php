@@ -1,38 +1,8 @@
-<html>
+@extends('layouts.pdf')
 
-<head>
-    <title>{{ $complaint->no_tiket }}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-        @page {
-            size: A4 landscape;
-        }
+@section('title', $complaint->no_tiket)
 
-        body {
-            font-size: 12pt;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            font-weight: bold;
-            text-align: left;
-        }
-
-        tr,
-        th,
-        td {
-            vertical-align: top;
-            padding: 5px;
-            border: 1px solid black;
-        }
-    </style>
-</head>
-
-<body>
+@section('content')
     <h1 style="text-align: center">{{ config('app.name') }}</h1>
 
     <table>
@@ -71,7 +41,4 @@
             <td>{{ $complaint->detail }}</td>
         </tr>
     </table>
-
-</body>
-
-</html>
+@endsection

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ComplaintSubmitted;
 use App\Models\Category;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
 
@@ -56,6 +58,10 @@ class ComplaintController extends Controller
 
         $complaint->save();
 
+        // Email notification to user
+        // Mail::to($complaint->user_email)->send(new ComplaintSubmitted($complaint));
+        Mail::to($complaint->user_email)->queue(new ComplaintSubmitted($complaint));
+
         return to_route('public.ticket', ['ticket' => $complaint->no_tiket]);
     }
 
@@ -85,9 +91,14 @@ class ComplaintController extends Controller
     public function printTicket($ticket)
     {
         $complaint = Complaint::where('no_tiket', $ticket)->firstOrFail();
-        $pdf = \PDF::loadView('public.pdf', [
-            'complaint' => $complaint
-        ]);
+
+        // Generate PDF
+        $pdf = \PDF::loadView('public.pdf', ['complaint' => $complaint]);
+
+        // View PDF in browser
         return $pdf->stream($ticket . '.pdf');
+
+        // Force user to download pdf file
+        // return $pdf->download($ticket . '.pdf');
     }
 }

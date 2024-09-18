@@ -38,18 +38,24 @@
                 {{ $complaint->detail }}
             </div>
 
-            <div class="mb-3">
-                <label for="detail" class="form-label">Lampiran</label>
-                <a href="{{ route('public.download', $complaint->no_tiket) }}" class="btn btn-dark">
-                    Muat turun lampiran
-                </a>
+            <div class="mb-3 row">
+                <div class="form-label col-auto">Lampiran</div>
+                <div class="col">
+                    @if ($complaint->lampiran !== null)
+                        <a href="{{ route('public.download', $complaint->no_tiket) }}" class="btn btn-dark">
+                            <i class="fa-solid fa-download pe-2"></i> Muat turun
+                        </a>
+                    @else
+                        <span class="text-muted fst-italic">- Tiada lampiran -</span>
+                    @endif
+                </div>
             </div>
         </div>
 
         <div class="card-footer d-flex justify-content-end">
-            <a href="{{ route('home') }}" class="btn btn-ghost-secondary me-auto">Kembali</a>
-            <a href="{{ route('public.pdf', $complaint->no_tiket) }}" class="btn btn-ghost-danger" target="_blank">
-                <i class="fa-solid fa-file-pdf"></i>
+            <a href="{{ route('public.complaint') }}" class="btn btn-ghost-secondary me-auto">Kembali</a>
+            <a href="{{ route('public.pdf', $complaint->no_tiket) }}" class="btn btn-primary" target="_blank">
+                <i class="fa-solid fa-print pe-2"></i> Cetak
             </a>
         </div>
 
