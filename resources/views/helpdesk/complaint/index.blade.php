@@ -13,6 +13,10 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="d-flex mb-2">
+                <a href="{{ route('helpdesk.download') }}" class="btn btn-dark ms-auto">Download</a>
+            </div>
+
             <table class="table table-bordered table-striped table-hover">
                 <thead class="table-dark">
                     <tr>

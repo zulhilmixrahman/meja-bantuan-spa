@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Helpdesk;
 
+use App\Exports\ComplaintExport;
 use App\Http\Controllers\Controller;
 use App\Models\Complaint;
 use App\Models\ComplaintLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Excel;
 
 class ComplaintController extends Controller
 {
@@ -17,6 +19,16 @@ class ComplaintController extends Controller
         return view('helpdesk.complaint.index', [
             'complaints' => $complaints
         ]);
+    }
+
+    public function download()
+    {
+        $subCatId = \App\Models\SubCategory::inRandomOrder()->first()->id;
+        $tahun = 2024;
+        $bulan = 9;
+
+        return (new ComplaintExport($subCatId, $tahun, $bulan))
+            ->download('complaint.xlsx', Excel::XLSX);
     }
 
     public function agihanForm(Complaint $complaint)
