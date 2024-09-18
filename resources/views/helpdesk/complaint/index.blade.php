@@ -25,9 +25,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php($index = $complaints->firstItem())
                     @foreach ($complaints as $complaint)
                         <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $index++ }}</td>
                             <td>{{ $complaint->no_tiket }}</td>
                             <td>{{ $complaint->sub_category->category->name }}</td>
                             <td>{{ $complaint->sub_category->name }}</td>
@@ -47,6 +48,8 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <div>{{ $complaints->links() }}</div>
         </div>
     </div>
 @endsection

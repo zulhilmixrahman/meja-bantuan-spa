@@ -13,7 +13,7 @@ class ComplaintController extends Controller
 {
     public function index()
     {
-        $complaints = Complaint::paginate();
+        $complaints = Complaint::paginate(10);
         return view('helpdesk.complaint.index', [
             'complaints' => $complaints
         ]);
