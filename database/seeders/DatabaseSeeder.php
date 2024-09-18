@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'password' => 'password'
         // ]);
 
+        $this->call(CategorySeeder::class);
         $this->call(PermissionsSeeder::class);
     }
 }
