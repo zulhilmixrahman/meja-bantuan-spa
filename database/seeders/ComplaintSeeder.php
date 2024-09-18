@@ -13,9 +13,9 @@ class ComplaintSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 90; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $year = 2024;
-            $month = rand(6, 9);
+            $month = rand(7, 9);
             $status = ['baru', 'dalam_tindakan', 'selesai'];
             $statusKey = array_rand($status);
 

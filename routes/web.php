@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index']);
+
 Route::get('aduan', [ComplaintController::class, 'showForm']);
 Route::post('aduan', [ComplaintController::class, 'complaint'])->name('public.complaint');
 Route::get('aduan/{ticket}', [ComplaintController::class, 'showTicket'])->name('public.ticket');
