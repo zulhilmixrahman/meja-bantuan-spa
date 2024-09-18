@@ -38,15 +38,20 @@
                             <td>{{ $complaint->sub_category->name }}</td>
                             <td>{{ $complaint->officer->name ?? 'Tiada' }}</td>
                             <td class="text-center align-middle">
+                                @can('agih aduan')
                                 <a href="{{ route('helpdesk.agih', ['complaint' => $complaint->id]) }}" class="btn btn-purple">
                                     Agih Aduan
                                 </a>
+                                @endcan
+
+                                @can('kemaskini tindakan')
                                 <a href="{{ route('helpdesk.tindakan', ['complaint' => $complaint->id]) }}" class="btn btn-lime">
                                     Tindakan
                                 </a>
                                 <a href="{{ route('helpdesk.logs', ['complaint' => $complaint->id]) }}" class="btn btn-blue">
                                     Log Tindakan
                                 </a>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

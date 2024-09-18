@@ -15,7 +15,14 @@ class ComplaintController extends Controller
 {
     public function index()
     {
-        $complaints = Complaint::paginate(10);
+        if(auth()->user()->hasRole('Pegawai Aduan')){
+            $complaints = Complaint::where('officer_id', auth()->user()->id)->paginate();
+        } else if(auth()->user()->hasRole('Pentadbir Aduan')) {
+            $complaints = Complaint::paginate(10);
+        } else {
+            $complaints = collect();
+        }
+
         return view('helpdesk.complaint.index', [
             'complaints' => $complaints
         ]);

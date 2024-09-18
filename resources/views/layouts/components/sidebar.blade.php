@@ -171,11 +171,15 @@
                         <span class="nav-link-title">@lang('Home')</span>
                     </a>
                 </li>
+
+                @hasanyrole('Pentadbir Aduan|Pegawai Aduan')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('helpdesk.index') }}">
                         <span class="nav-link-title">@lang('Senarai Aduan')</span>
                     </a>
                 </li>
+                @endhasanyrole
+
                 <li class="nav-item active dropdown">
                     <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="true">
@@ -191,6 +195,8 @@
                         <a class="dropdown-item" href="{{ route('admin.sub_categories.index') }}">
                             @lang('Sub Category')
                         </a>
+
+                        @hasrole('Administrator')
                         <a class="dropdown-item" href="{{ route('admin.users.index') }}">
                             @lang('Users')
                         </a>
@@ -203,6 +209,7 @@
                         <a class="dropdown-item" href="{{ route('admin.permissions.index') }}">
                             @lang('Permissions')
                         </a>
+                        @endhasrole
                     </div>
                 </li>
                 <!-- Remove this before deploy application -->

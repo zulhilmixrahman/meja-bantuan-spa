@@ -15,7 +15,6 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         for ($i = 0; $i < 5; $i++) {
-            $role = \App\Models\Role::whereNot('id', 1)->inRandomOrder()->first()->id;
             $firstName = fake()->firstName();
             $lastName = fake()->lastName();
 
@@ -28,7 +27,7 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $admin->assignRole($role);
+            $admin->assignRole(3);
         }
     }
 }
