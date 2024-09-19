@@ -9,6 +9,7 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index']);
+Route::get('get-officer-complaints/{officer}', [\App\Http\Controllers\DashboardController::class, 'getOfficerComplaint']);
 
 Route::get('aduan', [ComplaintController::class, 'showForm']);
 Route::post('aduan', [ComplaintController::class, 'complaint'])->name('public.complaint');
