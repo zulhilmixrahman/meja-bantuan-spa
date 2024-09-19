@@ -108,8 +108,8 @@
         });
 
         async function getOfficerData(officer) {
-            const url = '{{ url('get-officer-complaints') }}/' + officer;
             try {
+                const url = '{{ url('get-officer-complaints') }}/' + officer;
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error(`Response status: ${response.status}`);
@@ -117,11 +117,7 @@
 
                 const json = await response.json();
                 if (json.status === 'success') {
-                    // console.log(typeof window.officerStatusChart);
-                    // if (typeof window.officerStatusChart !== 'object') {
                     officerStatusChart.destroy();
-                    // }
-
                     officerStatusChart = new Chart(document.getElementById("officerStatusChart"), {
                         type: 'doughnut',
                         data: {
@@ -143,11 +139,7 @@
                             }
                         }
                     });
-
-
-                    console.log(window.officerStatusChart);
                 }
-
             } catch (error) {
                 console.error(error.message);
             }
