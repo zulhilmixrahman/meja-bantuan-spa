@@ -30,6 +30,7 @@ class DashboardController extends Controller
         if ($data->count() > 0) {
             return response()->json([
                 'status' => 'success',
+                'officer' => $officer->name,
                 'data' => [
                     'label' => $data->pluck('label')->toArray(),
                     'value' => $data->pluck('total')->toArray()
@@ -37,7 +38,7 @@ class DashboardController extends Controller
             ]);
         }
 
-        return response()->json(['status' => 'failed', 'data' => []]);
+        return response()->json(['status' => 'failed', 'officer' => $officer->name, 'data' => []]);
     }
 
     private function _getCategoriesData()
@@ -70,6 +71,10 @@ class DashboardController extends Controller
             ])
             ->options([
                 'plugins' => [
+                    'title' => [
+                        'display' => true,
+                        'text' => 'Bilangan aduan mengikut Sub Kategori'
+                    ],
                     'legend' => [
                         'position' => 'none'
                     ]
@@ -112,6 +117,10 @@ class DashboardController extends Controller
             ])
             ->options([
                 'plugins' => [
+                    'title' => [
+                        'display' => true,
+                        'text' => 'Bilangan aduan mengikut status tindakan'
+                    ],
                     'legend' => [
                         'position' => 'bottom'
                     ]

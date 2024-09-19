@@ -63,6 +63,10 @@
                             yAxisKey: 'label'
                         },
                         plugins: {
+                            title: {
+                                display: true,
+                                text: 'Bil aduan mengikut pegawai kes'
+                            },
                             legend: {
                                 position: 'none',
                             }
@@ -91,9 +95,16 @@
         })();
 
         var officerStatusChart = new Chart(document.getElementById("officerStatusChart"), {
-            type: 'pie',
+            type: 'doughnut',
             data: {},
-            options: {}
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Status tindakan pegawai'
+                    }
+                }
+            }
         });
 
         async function getOfficerData(officer) {
@@ -112,7 +123,7 @@
                     // }
 
                     officerStatusChart = new Chart(document.getElementById("officerStatusChart"), {
-                        type: 'pie',
+                        type: 'doughnut',
                         data: {
                             labels: json.data.label,
                             datasets: [{
@@ -121,9 +132,13 @@
                             }]
                         },
                         options: {
-                            "plugins": {
-                                "legend": {
-                                    "position": "bottom"
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Status tindakan ' + json.officer
+                                },
+                                legend: {
+                                    position: "bottom"
                                 }
                             }
                         }
