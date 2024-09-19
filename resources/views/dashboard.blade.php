@@ -22,7 +22,8 @@
                     <x-chartjs-component :chart="$kategori_chart" />
                 </div>
                 <div style="width: 50%; text-align: center; margin: 0 5% 50px;">
-                    <x-chartjs-component :chart="$officer_chart" />
+                    <canvas id="OfficerChart"></canvas>
+                    {{-- <x-chartjs-component :chart="$officer_chart" /> --}}
                 </div>
             </div>
 
@@ -40,14 +41,63 @@
 
 @section('page-scripts')
     <script>
+        (function() {
+            var init = function() {
+                "use strict";
+
+                var ctx = document.getElementById("OfficerChart");
+                var dataOfficer = {!! json_encode($officer_data) !!};
+                var config = {
+                    type: 'bar',
+                    data: {
+                        labels: {!! json_encode($officer_data->pluck('label')->toArray()) !!},
+                        datasets: [{
+                            label: 'Pegawai',
+                            data: dataOfficer,
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        parsing: {
+                            xAxisKey: 'total',
+                            yAxisKey: 'label'
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'none',
+                            }
+                        },
+                        onClick: (e) => {
+                            const activePoints = OfficerChart.getElementsAtEventForMode(e, 'nearest', {
+                                intersect: true
+                            }, false);
+                            if (activePoints.length > 0) {
+                                const index = activePoints[0].index;
+                                const key = OfficerChart.data.datasets[0].data[index].id;
+                                getOfficerData(key);
+                            }
+                        }
+                    }
+                };
+
+                window.OfficerChart = new Chart(ctx, config);
+            };
+
+            if (document.readyState !== 'loading') {
+                init();
+            } else {
+                document.addEventListener("DOMContentLoaded", init);
+            }
+        })();
+
         var officerStatusChart = new Chart(document.getElementById("officerStatusChart"), {
             type: 'pie',
             data: {},
             options: {}
         });
 
-        async function getOfficerData(officerName) {
-            const url = '{{ url('get-officer-complaints') }}/' + officerName;
+        async function getOfficerData(officer) {
+            const url = '{{ url('get-officer-complaints') }}/' + officer;
             try {
                 const response = await fetch(url);
                 if (!response.ok) {

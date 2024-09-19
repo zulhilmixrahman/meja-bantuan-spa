@@ -9,15 +9,40 @@ class DashboardController extends Controller
     public function index()
     {
         return view('dashboard', [
-            'kategori_chart' => $this->getCategoriesChart(),
-            'status_chart' => $this->getStatusChart(),
-            'officer_chart' => $this->getOfficerChart(),
+            'kategori_chart' => $this->_getCategoriesChart(),
+            'status_chart' => $this->_getStatusChart(),
+            // 'officer_chart' => $this->_getOfficerChart(),
+            'officer_data' => $this->_getOfficerData(),
         ]);
     }
 
-    private function getCategoriesChart()
+    public function getOfficerComplaint($officer)
     {
+        $officer = User::find($officer);
+
         $data = \DB::table('complaints')
+            ->select(['complaints.status AS label', \DB::raw('COUNT(complaints.id) AS total')])
+            ->where('complaints.officer_id', $officer->id)
+            ->groupBy('complaints.status')
+            ->orderBy('complaints.status')
+            ->get();
+
+        if ($data->count() > 0) {
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'label' => $data->pluck('label')->toArray(),
+                    'value' => $data->pluck('total')->toArray()
+                ]
+            ]);
+        }
+
+        return response()->json(['status' => 'failed', 'data' => []]);
+    }
+
+    private function _getCategoriesData()
+    {
+        return \DB::table('complaints')
             ->select([
                 'sub_categories.name AS label',
                 \DB::raw('COUNT(complaints.id) AS total'),
@@ -25,6 +50,11 @@ class DashboardController extends Controller
             ->join('sub_categories', 'complaints.sub_category_id', '=', 'sub_categories.id')
             ->groupBy('complaints.sub_category_id')
             ->get();
+    }
+
+    private function _getCategoriesChart()
+    {
+        $data = $this->_getCategoriesData();
 
         $chart = Chartjs::build()
             ->name("CategoryChart")
@@ -49,9 +79,9 @@ class DashboardController extends Controller
         return $chart;
     }
 
-    private function getStatusChart()
+    private function _getStatusData()
     {
-        $data = \DB::table('complaints')
+        return \DB::table('complaints')
             ->select([
                 'complaints.status AS label',
                 \DB::raw('COUNT(complaints.id) AS total'),
@@ -59,6 +89,11 @@ class DashboardController extends Controller
             ->groupBy('complaints.status')
             ->orderBy('complaints.status', 'ASC')
             ->get();
+    }
+
+    private function _getStatusChart()
+    {
+        $data = $this->_getStatusData();
 
         $chart = Chartjs::build()
             ->name("StatusChart")
@@ -86,17 +121,22 @@ class DashboardController extends Controller
         return $chart;
     }
 
-    private function getOfficerChart()
+    private function _getOfficerData()
     {
-        $data = \DB::table('complaints')
+        return \DB::table('complaints')
             ->select([
-                'complaints.officer_id AS id',
                 'users.name AS label',
+                'complaints.officer_id AS id',
                 \DB::raw('COUNT(complaints.id) AS total'),
             ])
             ->join('users', 'complaints.officer_id', '=', 'users.id')
             ->groupBy('complaints.officer_id')
             ->get();
+    }
+
+    private function _getOfficerChart()
+    {
+        $data = $this->_getOfficerData();
 
         $chart = Chartjs::build()
             ->name("OfficerChart")
@@ -129,29 +169,5 @@ class DashboardController extends Controller
             }");
 
         return $chart;
-    }
-
-    public function getOfficerComplaint($officer)
-    {
-        $officer = User::where('name', $officer)->first();
-
-        $data = \DB::table('complaints')
-            ->select(['complaints.status AS label', \DB::raw('COUNT(complaints.id) AS total')])
-            ->where('complaints.officer_id', $officer->id)
-            ->groupBy('complaints.status')
-            ->orderBy('complaints.status')
-            ->get();
-
-        if ($data->count() > 0) {
-            return response()->json([
-                'status' => 'success',
-                'data' => [
-                    'label' => $data->pluck('label')->toArray(),
-                    'value' => $data->pluck('total')->toArray()
-                ]
-            ]);
-        }
-
-        return response()->json(['status' => 'failed', 'data' => []]);
     }
 }
